@@ -1,0 +1,89 @@
+{
+  "expenseRules": [
+    {
+      "category": "Investments",
+      "keywords": [
+        "mutual fund", "mutualfund", "mf ", "groww", "zerodha", "upstox",
+        "kuvera", "nps", "ppf", "sip", "iccl", "hdfc amc", "sbi amc",
+        "icicipru", "bse star", "coin by", "apy contri", "apy",
+        "inb deposit", "deposit / investment"
+      ]
+    },
+    {
+      "category": "Food & Dining",
+      "keywords": [
+        "hungerbox", "mcdonald", "mc donalds", "swiggy", "zomato", "happy tum",
+        "dominos", "kfc", "subway", "barbeque", "pizza", "burger",
+        "restaurant", "cafe ", "dhaba", "biryani", "dining", "eatclub",
+        "blinkit", "bigbasket", "big basket", "dmart", "grofer",
+        "zepto", "instamart", "reliance fresh", "more super", "nature basket"
+      ]
+    },
+    {
+      "category": "Shopping",
+      "keywords": [
+        "amazon", "flipkart", "myntra", "ajio", "meesho", "nykaa",
+        "shopsy", "snapdeal", "tatacliq", "lifestyle", "westside", "100kmph"
+      ]
+    },
+    {
+      "category": "Entertainment",
+      "keywords": ["bookmyshow", "pvr", "inox", "game", "steam", "playo"]
+    },
+    {
+      "category": "Transport",
+      "keywords": [
+        "uber", "ola ", "rapido", "fastag", "nhai", "petrol", "fuel",
+        "iocl", "bpcl", "hpcl", "metro", "delhi met", "irctc", "makemytrip",
+        "cleartrip", "indigo", "air india", "ixigo", "adhoc si"
+      ]
+    },
+    {
+      "category": "Health",
+      "keywords": [
+        "pharmacy", "medical", "hospital", "clinic", "doctor",
+        "netmeds", "pharmeasy", "1mg", "apollo", "apollo 247", "practo", "health"
+      ]
+    },
+    {
+      "category": "Subscriptions",
+      "keywords": [
+        "spotify", "netflix", "hotstar", "disney+", "apple one", "apple sub",
+        "prime video", "amazon prime", "zee5", "sonyliv", "youtube premium",
+        "google one", "google p", "playstore", "microsoft 365", "adobe",
+        "notion", "slack", "dropbox", "github", "chatgpt", "openai", "canva",
+        "furlenco", "sms charges", "debit card annual"
+      ]
+    },
+    {
+      "category": "Transfers",
+      "keywords": ["upi/dr", "neft", "imps", "rtgs"]
+    }
+  ],
+  "incomeRules": [
+    {
+      "source": "Income",
+      "keywords": ["salary", "citi", "payroll", "employer"]
+    },
+    {
+      "source": "Interest",
+      "keywords": ["interes t credit", "interest", "sbint", "int cr"]
+    },
+    {
+      "source": "Cash Deposit",
+      "keywords": ["cash deposit"]
+    },
+    {
+      "source": "Freelance",
+      "keywords": ["freelance", "consulting", "invoice"]
+    },
+    {
+      "source": "Bank Transfer",
+      "keywords": ["neft", "imps", "rtgs", "dep tfr", "wdl tfr"]
+    },
+    {
+      "source": "Refund",
+      "keywords": ["refund", "cashback", "reversal"]
+    }
+  ]
+}

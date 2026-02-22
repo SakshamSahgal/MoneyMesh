@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Moneymesh</title>
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+  <div id="app">
+
+    <header class="header">
+      <h1>Moneymesh</h1>
+      <p class="subtitle">Visualize your cash flow from bank statements</p>
+    </header>
+
+    <div class="controls">
+      <div class="upload-section">
+        <label class="btn-upload btn-rules" for="rulesInput">&#9881; Load Rules JSON</label>
+        <input type="file" id="rulesInput" accept=".json" />
+        <span id="rulesStatus" class="rules-status"></span>
+      </div>
+      <div class="upload-section">
+        <label class="btn-upload" for="fileInput">&#128194; Select Statements Folder</label>
+        <input type="file" id="fileInput" webkitdirectory multiple />
+        <span id="fileCount" class="file-count"></span>
+      </div>
+
+      <div class="filters" id="filters">
+        <div class="filter-group date-range-group">
+          <label>Period</label>
+          <div class="range-slider-wrap">
+            <div class="range-slider">
+              <div class="range-track"><div class="range-fill" id="rangeFill"></div></div>
+              <input type="range" id="startRange" min="0" max="100" value="0"   step="1">
+              <input type="range" id="endRange"   min="0" max="100" value="100" step="1">
+            </div>
+            <div class="range-labels">
+              <span id="startDateLabel"></span>
+              <span id="endDateLabel"></span>
+            </div>
+          </div>
+        </div>
+        <div class="filter-group">
+          <label for="bankFilter">Bank</label>
+          <select id="bankFilter"></select>
+        </div>
+      </div>
+    </div>
+
+    <div id="status" class="status"></div>
+
+    <div class="summary" id="summary"></div>
+
+    <div id="chart-container" class="chart-container">
+      <div class="empty-state" id="emptyState">
+        <div class="empty-icon">&#128202;</div>
+        <p>Select your <strong>Statements</strong> folder to visualize your finance flow</p>
+        <small>Supports Excel (.xlsx) bank statements</small>
+      </div>
+      <svg id="sankey-svg"></svg>
+    </div>
+
+  </div>
+
+  <div id="tooltip" class="tooltip"></div>
+
+  <!-- Transaction Drill-down Modal -->
+  <div id="txn-modal" class="modal-overlay">
+    <div class="modal-card">
+      <div class="modal-header">
+        <div>
+          <h2 id="modal-title"></h2>
+          <p id="modal-subtitle" class="modal-subtitle"></p>
+          <div id="modal-tabs" class="modal-tabs"></div>
+        </div>
+        <button id="modal-close" class="modal-close">&times;</button>
+      </div>
+      <div class="modal-body">
+        <!-- Info mode: explanation + breakdown table -->
+        <div id="modal-explain-section" style="display:none">
+          <p id="modal-explain-text" class="modal-explain-text"></p>
+          <table class="txn-table" id="modal-breakdown-table">
+            <thead id="modal-breakdown-head"></thead>
+            <tbody id="modal-breakdown-body"></tbody>
+          </table>
+        </div>
+        <!-- Transaction mode: keyword tabs + transaction table -->
+        <div id="modal-txn-section">
+          <table class="txn-table">
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Description</th>
+                <th>Bank</th>
+                <th>Amount</th>
+              </tr>
+            </thead>
+            <tbody id="modal-tbody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CDN Libraries -->
+  <script src="https://cdn.sheetjs.com/xlsx-latest/package/dist/xlsx.full.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+  <script src="https://cdn.jsdelivr.net/npm/d3-sankey@0.12.3/dist/d3-sankey.min.js"></script>
+
+  <!-- App Modules (order matters) -->
+  <script src="js/categorizer.js"></script>
+  <script src="js/fileLoader.js"></script>
+  <script src="js/dataProcessor.js"></script>
+  <script src="js/chartRenderer.js"></script>
+  <script src="js/modal.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
