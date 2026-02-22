@@ -15,6 +15,22 @@ const App = (() => {
     document.getElementById('rulesInput')
       .addEventListener('change', handleRules);
 
+    document.getElementById('searchBtn')
+      .addEventListener('click', openSearch);
+
+    document.getElementById('search-close')
+      .addEventListener('click', closeSearch);
+
+    document.getElementById('search-modal')
+      .addEventListener('click', (e) => { if (e.target === e.currentTarget) closeSearch(); });
+
+    document.getElementById('search-input')
+      .addEventListener('input', (e) => renderSearchResults(e.target.value));
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeSearch();
+    });
+
     document.getElementById('fileInput')
       .addEventListener('change', handleFiles);
 
@@ -73,6 +89,7 @@ const App = (() => {
       populateFilters();
       document.getElementById('filters').style.display = 'flex';
 
+      document.getElementById('searchBtn').style.display = 'inline-flex';
       refresh();
       setStatus('');
     } catch (err) {
@@ -266,6 +283,63 @@ const App = (() => {
     summary.querySelectorAll('[data-card]').forEach(card => {
       card.addEventListener('click', () => cardHandlers[card.dataset.card]());
     });
+  }
+
+  // ── Search ───────────────────────────────────────────────────────────────────
+  function openSearch() {
+    document.getElementById('search-modal').classList.add('open');
+    const input = document.getElementById('search-input');
+    input.value = '';
+    renderSearchResults('');
+    setTimeout(() => input.focus(), 50);
+  }
+
+  function closeSearch() {
+    document.getElementById('search-modal').classList.remove('open');
+  }
+
+  function renderSearchResults(query) {
+    const fmt     = ChartRenderer.formatCurrency;
+    const { startDate, endDate } = getSliderDates();
+    const bank    = document.getElementById('bankFilter').value;
+
+    const { transactions } =
+      FileLoader.filterTransactions(allTransactions, allBankStats, { startDate, endDate, bank });
+
+    const q = query.trim().toLowerCase();
+    const matched = q
+      ? transactions.filter(t =>
+          (t.description || '').toLowerCase().includes(q) ||
+          (t.bank        || '').toLowerCase().includes(q) ||
+          (t.date        || '').toString().toLowerCase().includes(q) ||
+          (t.debit  > 0 && String(t.debit).includes(q))  ||
+          (t.credit > 0 && String(t.credit).includes(q))
+        )
+      : transactions;
+
+    const sorted = [...matched].sort((a, b) => new Date(b.date || 0) - new Date(a.date || 0));
+
+    document.getElementById('search-results-info').textContent =
+      q ? `${sorted.length} result(s) for "${query}"` : `${sorted.length} transactions in selected range`;
+
+    const fmtDate = d => d ? String(d).split('T')[0].split(' ')[0] : '—';
+
+    document.getElementById('search-tbody').innerHTML = sorted.length
+      ? sorted.map(t => {
+          const isCredit = t.credit > 0;
+          const amount   = isCredit ? t.credit : t.debit;
+          const cls      = isCredit ? 'credit' : 'debit';
+          const sign     = isCredit ? '+' : '-';
+          const desc     = (t.description || '').substring(0, 60) +
+                           (t.description && t.description.length > 60 ? '…' : '');
+          return `<tr>
+            <td>${fmtDate(t.date)}</td>
+            <td class="desc" title="${t.description || ''}">${desc}</td>
+            <td>${t.bank || '—'}</td>
+            <td class="amount ${cls}">${sign}${fmt(amount)}</td>
+          </tr>`;
+        }).join('')
+      : `<tr><td colspan="4" style="text-align:center;color:#aaa;padding:24px">No results found</td></tr>`;
   }
 
   // ── Helpers ──────────────────────────────────────────────────────────────────

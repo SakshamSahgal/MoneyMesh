@@ -48,4 +48,29 @@ Because the app uses a file picker to read your statements, it works fine by jus
 
 ## Customizing categories
 
-Open `rules.json` and add or edit keywords under the relevant category. No code changes required. Keywords are matched case-insensitively against the transaction description.
+`rules.json` is fully customizable. You can edit existing categories, add your own, or define new income sources — all without touching any code.
+
+The file has two sections: `expenseRules` for spending categories and `incomeRules` for income sources. Each entry has a `category` (or `source`) name and a list of `keywords`. When a transaction description contains any of those keywords, it gets assigned to that category.
+
+```json
+{
+  "expenseRules": [
+    {
+      "category": "Rent",
+      "keywords": ["rent", "landlord", "housing society", "maintenance charge"]
+    }
+  ],
+  "incomeRules": [
+    {
+      "source": "Rental Income",
+      "keywords": ["rent received", "tenant payment"]
+    }
+  ]
+}
+```
+
+A few things to keep in mind:
+
+- Keywords are matched case-insensitively, so write them in lowercase
+- The first matching rule wins, so put more specific keywords before generic ones
+- If no keyword matches, the transaction falls into **Others** or **Other Income**

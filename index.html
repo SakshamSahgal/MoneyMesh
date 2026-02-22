@@ -26,6 +26,8 @@
         <span id="fileCount" class="file-count"></span>
       </div>
 
+      <button id="searchBtn" class="btn-search" style="display:none">&#128269; Search</button>
+
       <div class="filters" id="filters">
         <div class="filter-group date-range-group">
           <label>Period</label>
@@ -99,6 +101,30 @@
             <tbody id="modal-tbody"></tbody>
           </table>
         </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Search Modal -->
+  <div id="search-modal" class="modal-overlay">
+    <div class="modal-card search-modal-card">
+      <div class="modal-header search-modal-header">
+        <input type="text" id="search-input" class="search-input" placeholder="Search by description, bank, date or amount..." />
+        <button id="search-close" class="modal-close">&times;</button>
+      </div>
+      <div id="search-results-info" class="search-results-info"></div>
+      <div class="modal-body">
+        <table class="txn-table">
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Description</th>
+              <th>Bank</th>
+              <th>Amount</th>
+            </tr>
+          </thead>
+          <tbody id="search-tbody"></tbody>
+        </table>
       </div>
     </div>
   </div>
