@@ -43,6 +43,7 @@ Because the app uses a file picker to read your statements, it works fine by jus
 2. Click **Select Statements Folder** and select your `Statements` folder.
 3. Use the date range slider and bank filter to narrow down the view.
 4. Click any node or summary card for a breakdown.
+5. Use the **Search** button to find any transaction across the selected range — searches by description, bank, date, or amount in real time.
 
 ---
 
