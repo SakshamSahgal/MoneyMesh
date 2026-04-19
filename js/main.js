@@ -8,6 +8,10 @@ const App = (() => {
   let allBankStats    = [];
   let sliderMinDate   = null;   // earliest transaction date (Date object)
 
+  // Search-modal sort state (preserved across re-renders)
+  const searchSort = { col: 'date', dir: 'desc' };
+  let searchCurrent = [];
+
   // ── Init ────────────────────────────────────────────────────────────────────
   function init() {
     Modal.init();
@@ -44,6 +48,9 @@ const App = (() => {
       .addEventListener('change', refresh);
 
     window.addEventListener('resize', debounce(refresh, 300));
+
+    const searchThead = document.querySelector('#search-modal thead');
+    TableSort.wire(searchThead, searchSort, paintSearchTable);
   }
 
   // ── Rules Upload Handler ─────────────────────────────────────────────────────
@@ -299,15 +306,14 @@ const App = (() => {
   }
 
   function renderSearchResults(query) {
-    const fmt     = ChartRenderer.formatCurrency;
     const { startDate, endDate } = getSliderDates();
-    const bank    = document.getElementById('bankFilter').value;
+    const bank = document.getElementById('bankFilter').value;
 
     const { transactions } =
       FileLoader.filterTransactions(allTransactions, allBankStats, { startDate, endDate, bank });
 
     const q = query.trim().toLowerCase();
-    const matched = q
+    searchCurrent = q
       ? transactions.filter(t =>
           (t.description || '').toLowerCase().includes(q) ||
           (t.bank        || '').toLowerCase().includes(q) ||
@@ -317,12 +323,16 @@ const App = (() => {
         )
       : transactions;
 
-    const sorted = [...matched].sort((a, b) => new Date(b.date || 0) - new Date(a.date || 0));
-
     document.getElementById('search-results-info').textContent =
-      q ? `${sorted.length} result(s) for "${query}"` : `${sorted.length} transactions in selected range`;
+      q ? `${searchCurrent.length} result(s) for "${query}"` : `${searchCurrent.length} transactions in selected range`;
 
+    paintSearchTable();
+  }
+
+  function paintSearchTable() {
+    const fmt     = ChartRenderer.formatCurrency;
     const fmtDate = d => d ? String(d).split('T')[0].split(' ')[0] : '—';
+    const sorted  = TableSort.sort(searchCurrent, searchSort.col, searchSort.dir);
 
     document.getElementById('search-tbody').innerHTML = sorted.length
       ? sorted.map(t => {

@@ -92,10 +92,10 @@
           <table class="txn-table">
             <thead>
               <tr>
-                <th>Date</th>
-                <th>Description</th>
-                <th>Bank</th>
-                <th>Amount</th>
+                <th data-sort="date">Date</th>
+                <th data-sort="description">Description</th>
+                <th data-sort="bank">Bank</th>
+                <th data-sort="amount">Amount</th>
               </tr>
             </thead>
             <tbody id="modal-tbody"></tbody>
@@ -117,10 +117,10 @@
         <table class="txn-table">
           <thead>
             <tr>
-              <th>Date</th>
-              <th>Description</th>
-              <th>Bank</th>
-              <th>Amount</th>
+              <th data-sort="date">Date</th>
+              <th data-sort="description">Description</th>
+              <th data-sort="bank">Bank</th>
+              <th data-sort="amount">Amount</th>
             </tr>
           </thead>
           <tbody id="search-tbody"></tbody>
@@ -135,6 +135,7 @@
   <script src="https://cdn.jsdelivr.net/npm/d3-sankey@0.12.3/dist/d3-sankey.min.js"></script>
 
   <!-- App Modules (order matters) -->
+  <script src="js/tableSort.js"></script>
   <script src="js/categorizer.js"></script>
   <script src="js/fileLoader.js"></script>
   <script src="js/dataProcessor.js"></script>
