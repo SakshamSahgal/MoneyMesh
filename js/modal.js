@@ -28,8 +28,7 @@ const Modal = (() => {
       const amount   = isCredit ? t.credit : t.debit;
       const amtClass = isCredit ? 'credit' : 'debit';
       const amtSign  = isCredit ? '+' : '-';
-      const desc     = (t.description || '').substring(0, 60) +
-                       (t.description && t.description.length > 60 ? '…' : '');
+      const desc     = t.description || '';
       return `
         <tr>
           <td>${fmtDate(t.date)}</td>
